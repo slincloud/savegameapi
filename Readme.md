@@ -8,7 +8,7 @@ The following is the very short version how to set this up.
 * Log in to the dynamoDB console
 * Hit "Create table", set "SavegameAPI" as the table name, enter "userId" as the primary key (do not add a sort key) and leave the rest on default. The table will take a few moments to create.
 
-[more info](../how-to-set-up-a-serverless-scalable-backend-without-hosting-costs-part-2-dynamodb/)
+[more info](http://slin.cloud/how-to-set-up-a-serverless-scalable-backend-without-hosting-costs-part-2-dynamodb/)
 
 ###Lambda
 
@@ -73,7 +73,7 @@ The lambda function needs permission to read and write from dynamoDB as well as 
 * Hit "Next" and on the review page "Create function"
 * Copy your function ARN - it is shown on the top right on the screen after your lambda function was created
 
-[more info](../how-to-set-up-a-serverless-scalable-backend-without-hosting-costs-part-3-the-lambda-function/)
+[more info](http://slin.cloud/how-to-set-up-a-serverless-scalable-backend-without-hosting-costs-part-3-the-lambda-function/)
 
 ###API Gateway
 * Open the APIGateway.yaml (or the APIGateway_CORSenabled.yaml if you need CORS) from the repository in any editor
@@ -84,7 +84,6 @@ The lambda function needs permission to read and write from dynamoDB as well as 
 * Under "Create new API" select "Import from Swagger" and paste the definition into the box
 * Select your API, make sure you are in "resources" in the left menu. Select the POST method under the /register resource, and then "Integration Request".
 * Click the icon for editing the lambda function name, then save it again without changing. This will fix missing permissions for the API Gateway resource.
-![Api-Gateway-2](/content/images/2016/10/apigateway_2.png)
 * Repeat this for the other 2 methods in the /users resource.
 * Select "Actions" / Deploy API" from the Dropdown button
 * Select "[New Stage]" and enter "prod" as Stage Name
