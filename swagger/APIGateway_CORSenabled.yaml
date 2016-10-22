@@ -1,0 +1,195 @@
+swagger: "2.0"  
+info:  
+  version: "2016-10-22T20:01:01Z"
+  title: "SavegameAPI"
+host: "qqdg6fs3il.execute-api.us-east-1.amazonaws.com"  
+basePath: "/prod"  
+schemes:  
+- "https"
+paths:  
+  /register:
+    post:
+      consumes:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          backend error:
+            statusCode: "500"
+        requestTemplates:
+          application/json: "{\n    \"operation\": \"register\",\n    \"body\" : $input.json('$')\n\
+            }\n"
+        uri: "arn:aws:apigateway:_AWS_REGION_:lambda:path/2015-03-31/functions/_LAMBDA_FUNCTION_ARN_/invocations"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authToken,x-unity-version'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /users/{userId}:
+    get:
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "authToken"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+      x-amazon-apigateway-integration:
+        responses:
+          user data not found:
+            statusCode: "404"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          backend error:
+            statusCode: "500"
+          auth error:
+            statusCode: "403"
+        requestTemplates:
+          application/json: "{\n  \"operation\": \"load\",\n  \"params\": {\n    #foreach($param\
+            \ in $input.params().path.keySet())\n    \"$param\": \"$util.escapeJavaScript($input.params().path.get($param))\"\
+            \ #if($foreach.hasNext),#end\n\n    #end\n  },\n  \"headers\": {\n   \
+            \ #foreach($header in $input.params().header.keySet())\n    \"$header\"\
+            : \"$util.escapeJavaScript($input.params().header.get($header))\" #if($foreach.hasNext),#end\n\
+            \n    #end\n  }\n}\n"
+        uri: "arn:aws:apigateway:_AWS_REGION_:lambda:path/2015-03-31/functions/_LAMBDA_FUNCTION_ARN_/invocations"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        type: "aws"
+    post:
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "authToken"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+      x-amazon-apigateway-integration:
+        responses:
+          user data not found:
+            statusCode: "404"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          backend error:
+            statusCode: "500"
+          auth error:
+            statusCode: "403"
+        requestParameters:
+          integration.request.path.userId: "method.request.path.userId"
+        requestTemplates:
+          application/json: "{\n  \"operation\": \"save\",\n  \"params\": {\n    #foreach($param\
+            \ in $input.params().path.keySet())\n    \"$param\": \"$util.escapeJavaScript($input.params().path.get($param))\"\
+            \ #if($foreach.hasNext),#end\n    #end\n  },\n  \"headers\": {\n    #foreach($header\
+            \ in $input.params().header.keySet())\n    \"$header\": \"$util.escapeJavaScript($input.params().header.get($header))\"\
+            \ #if($foreach.hasNext),#end\n\n    #end\n  },\n  \"body\" : $input.json('$')\n\
+            }\n"
+        uri: "arn:aws:apigateway:_AWS_REGION_:lambda:path/2015-03-31/functions/_LAMBDA_FUNCTION_ARN_/invocations"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'POST,GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authToken,x-unity-version'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+definitions:  
+  Empty:
+    type: "object"
+    title: "Empty Schema"
