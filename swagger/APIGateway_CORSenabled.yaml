@@ -2,8 +2,6 @@ swagger: "2.0"
 info:  
   version: "2016-10-22T20:01:01Z"
   title: "SavegameAPI"
-host: "qqdg6fs3il.execute-api.us-east-1.amazonaws.com"  
-basePath: "/prod"  
 schemes:  
 - "https"
 paths:  
